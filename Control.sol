@@ -4,6 +4,7 @@ pragma solidity ^ 0.8.13;
 
 contract Control {
   address owner;
+
   bool public paused;
 
   constructor() public {
@@ -21,5 +22,9 @@ contract Control {
     require(msg.sender == owner, "You are not the owner, bro.");
     require(!paused, "Contract is paused.");
     _to.transfer(address(this).balance);
+  }
+  function destroySmartContract(address payable _to) public {
+    require(msg.sender == owner, "You are not the owner, bro.");
+    selfdestruct(_to);
   }
 }
